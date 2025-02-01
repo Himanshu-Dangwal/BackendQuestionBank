@@ -1,19 +1,5 @@
 const Questions = require("../models/Questions")
 
-
-// module.exports.getQuestions = async function (req, res) {
-//     try {
-//         const questions = await Questions.find({});
-//         if (!questions || questions.length === 0) {
-//             return res.status(404).json({ message: "No questions found" });
-//         }
-//         res.status(200).json({ message: "success", questions });
-//     } catch (error) {
-//         console.error(error);
-//         res.status(500).json({ message: "Error fetching questions from the server" });
-//     }
-// };
-
 module.exports.getQuestions = async function (req, res) {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 20;
@@ -63,3 +49,8 @@ module.exports.createQuestion = async function (req, res) {
         res.status(500).json({ message: "Error creating the question", error: error.message });
     }
 };
+
+
+
+
+
