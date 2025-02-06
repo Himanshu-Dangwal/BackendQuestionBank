@@ -7,7 +7,7 @@ module.exports.fetchUser = function (req, res, next) {
             return res.status(401).json({ message: "Authorization required" });
         }
 
-        jwt.verify(token, process.env.JSW_SECRET, (err, decoded) => {
+        jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
             if (err) {
                 console.error(err);
                 return res

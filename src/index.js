@@ -22,7 +22,8 @@ app.use(express.json());
 // connectToMongo().then(() => { console.log("Successfully connected to database") });
 
 const PORT = process.env.PORT || 8080
-const dbUrl = process.env.PROD_URI || "mongodb://localhost:27017/"
+console.log(process.env.DB_URL)
+const dbUrl = process.env.DB_URL || "mongodb://localhost:27017/"
 
 console.log(dbUrl)
 
