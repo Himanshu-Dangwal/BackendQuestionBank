@@ -2,7 +2,7 @@ const Questions = require("../models/Questions")
 
 module.exports.getQuestions = async function (req, res) {
     const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 20;
+    const limit = parseInt(req.query.limit) || 10;
 
     try {
         const skip = (page - 1) * limit;
