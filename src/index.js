@@ -2,6 +2,7 @@ const express = require("express")
 const mongoose = require("mongoose")
 const cors = require("cors")
 const dotenv = require("dotenv")
+const axios = require("axios")
 
 const authRoute = require("../routes/authRoute")
 const dashboardRoute = require("../routes/dashboardRoute")
@@ -22,6 +23,7 @@ app.use(express.json());
 // connectToMongo().then(() => { console.log("Successfully connected to database") });
 
 const PORT = process.env.PORT || 8080
+const backendURL = process.env.BackendURL
 console.log(process.env.DB_URL)
 // const dbUrl = process.env.DB_URL || "mongodb://localhost:27017/"
 
@@ -57,3 +59,14 @@ app.use("/api/dashboard", dashboardRoute)
 app.listen(PORT, (req, res) => {
     console.log(`Server started on PORT ${PORT}`);
 })
+
+setInterval(() => {
+    axios.get(`${backendURL}`)
+        .then(response => {
+            console.log('Pinged backend to keep it alive.');
+        })
+        .catch(error => {
+            console.error('Error pinging backend:', error);
+        });
+}, 2 * 60 * 1000);
+
