@@ -8,7 +8,7 @@ module.exports.loginHandler = async (req, res) => {
     console.log(process.env.JWT_SECRET)
     const { username, password, captchaValue } = req.body;
 
-    if (!captcha) {
+    if (!captchaValue) {
         return res.status(400).json({ error: "CAPTCHA is required!" });
     }
     console.log(username, password, captchaValue);
