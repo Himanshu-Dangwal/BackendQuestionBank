@@ -1,12 +1,26 @@
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const bcrypt = require("bcryptjs")
+const RECAPTCHA_SECRET_KEY = process.env.SECRET_KEY;
 
 module.exports.loginHandler = async (req, res) => {
     console.log(process.env.JWT_SECRET)
-    const { username, password } = req.body;
-    console.log(username, password);
+    const { username, password, captchaValue } = req.body;
+
+    if (!captcha) {
+        return res.status(400).json({ error: "CAPTCHA is required!" });
+    }
+    console.log(username, password, captchaValue);
     try {
+
+        const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${RECAPTCHA_SECRET_KEY}&response=${captchaValue}`;
+
+        const { data } = await axios.post(verifyUrl);
+
+        if (!data.success) {
+            return res.status(400).json({ error: "CAPTCHA verification failed!" });
+        }
+
         const foundUser = await User.findOne({ username });
         if (!foundUser) return res.status(404).json({ message: 'User not found' });
         console.log(foundUser);
