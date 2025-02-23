@@ -17,7 +17,7 @@ module.exports.loginHandler = async (req, res) => {
         const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${RECAPTCHA_SECRET_KEY}&response=${captchaValue}`;
 
         const { data } = await axios.post(verifyUrl);
-
+        console.log(data);
         if (!data.success) {
             return res.status(400).json({ error: "CAPTCHA verification failed!" });
         }
