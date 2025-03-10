@@ -11,6 +11,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    totalActiveTime: {
+        type: Number,
+        default: 0
+    },
     isActive: { type: Boolean, default: true },
     createdAt: { type: Date, default: Date.now },
 })
