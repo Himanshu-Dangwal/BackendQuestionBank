@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 module.exports.fetchUser = function (req, res, next) {
     try {
-        const token = req.headers.authorization.split(' ')[1];
+        const token = req.headers.authorization?.split(' ')[1];
 
         if (!token) {
             return res.status(401).json({ message: "Authorization required" });
@@ -14,9 +14,9 @@ module.exports.fetchUser = function (req, res, next) {
                     .status(401)
                     .json({ message: 'Invalid token', error: err.message });
             }
-
-            req.user = decoded.user;
-            console.log(req.user);
+            // console.log(decoded)
+            req.id = decoded.id;
+            // console.log(req.user);
 
             next();
         });

@@ -79,3 +79,20 @@ module.exports.loginTestHandler = async (req, res) => {
     }
 
 }
+
+module.exports.updateActiveTimeHandler = async (req, res) => {
+    const id = req.id;
+    const { activeTime } = req.body;
+    // console.log(user);
+    // console.log(id);
+    try {
+        const foundUser = await User.findById(id);
+        if (!foundUser) return res.status(404).json({ message: 'User not found' });
+        foundUser.totalActiveTime += activeTime;
+        await (foundUser.save());
+        // console.log(foundUser);
+        res.status(200).json({ message: "Updated time" });
+    } catch (error) {
+        res.status(500).json({ message: 'Server error' });
+    }
+}
