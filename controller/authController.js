@@ -29,18 +29,8 @@ module.exports.loginHandler = async (req, res) => {
 
         console.log("Checked for active user")
         console.log(foundUser.isActive);
-        // const isMatch = await bcrypt.compare(password, user.password);
 
-        // const isMatch = await foundUser.comparePassword(password);
-
-        // console.log(`Is it a match - ${isMatch}`)
-        // if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
-        // try {
         const isMatch = await bcrypt.compare(password, foundUser.password);
-        // } catch (error) {
-        //     console.log(error);
-        // }
-        // console.log(isMatch)
         if (!isMatch) {
             return res.status(400).json({ success: false, message: 'Invalid credentials' });
         }
@@ -70,4 +60,22 @@ module.exports.signupHandler = async (req, res) => {
         console.log(err)
         res.status(500).json({ message: "Error searching the db or creating the user" })
     }
+}
+
+module.exports.loginTestHandler = async (req, res) => {
+    const { username, password } = req.body;
+    try {
+        const foundUser = await User.findOne({ username });
+        if (!foundUser) return res.status(404).json({ message: 'User not found' });
+        const isMatch = await bcrypt.compare(password, foundUser.password);
+        if (!isMatch) {
+            return res.status(400).json({ success: false, message: 'Invalid credentials' });
+        }
+
+        const token = jwt.sign({ id: foundUser._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
+        res.status(200).json({ token });
+    } catch (error) {
+        res.status(500).json({ message: 'Server error' });
+    }
+
 }
