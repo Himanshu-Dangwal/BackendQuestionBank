@@ -10,3 +10,8 @@ module.exports.loginSchema = Joi.object({
     password: Joi.string().required().min(5),
     captchaValue: Joi.string().required()
 })
+
+module.exports.loginTestSchema = Joi.object({
+    username: Joi.string().required(),
+    password: Joi.string().required().min(5)
+})
