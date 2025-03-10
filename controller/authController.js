@@ -96,3 +96,28 @@ module.exports.updateActiveTimeHandler = async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 }
+
+module.exports.totalActiveTime = async (req, res) => {
+    try {
+        const users = await User.find({}, 'username isActive createdAt totalActiveTime');
+
+        const formattedUsers = users.map(user => {
+            const totalSeconds = user.totalActiveTime;
+            const hours = Math.floor(totalSeconds / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+
+            return {
+                username: user.username,
+                isActive: user.isActive,
+                createdAt: user.createdAt,
+                totalActiveTime: `${hours}h ${minutes}m ${seconds}s`
+            };
+        });
+
+        res.status(200).json(formattedUsers);
+    } catch (error) {
+        console.error("Error fetching users:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+};
