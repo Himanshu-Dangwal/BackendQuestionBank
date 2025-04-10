@@ -7,6 +7,7 @@ const axios = require("axios")
 const authRoute = require("../routes/authRoute")
 const dashboardRoute = require("../routes/dashboardRoute")
 const sessionRoute = require("../routes/sessionRoute")
+const stagingRoute = require("../routes/stagingRoute")
 
 dotenv.config()
 const app = express()
@@ -57,6 +58,7 @@ app.get("/", (req, res) => {
 app.use("/api/auth", authRoute);
 app.use("/api/dashboard", dashboardRoute)
 app.use("/api/checkSession", sessionRoute);
+app.use("/api/staging", stagingRoute);
 
 app.listen(PORT, (req, res) => {
     console.log(`Server started on PORT ${PORT}`);
