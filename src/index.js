@@ -8,21 +8,13 @@ const authRoute = require("../routes/authRoute")
 const dashboardRoute = require("../routes/dashboardRoute")
 const sessionRoute = require("../routes/sessionRoute")
 const stagingRoute = require("../routes/stagingRoute")
+const explanationsRoute = require("../routes/explanationsRoute")
 
 dotenv.config()
 const app = express()
 app.use(cors())
 app.use(express.json());
 
-// async function connectToMongo() {
-//     try {
-//         await mongoose.connect(process.env.MONGO_URI)
-//     } catch (error) {
-//         console.log(error)
-//     }
-// }
-
-// connectToMongo().then(() => { console.log("Successfully connected to database") });
 
 const PORT = process.env.PORT || 8080
 const backendURL = process.env.BackendURL
@@ -58,7 +50,8 @@ app.get("/", (req, res) => {
 app.use("/api/auth", authRoute);
 app.use("/api/dashboard", dashboardRoute)
 app.use("/api/checkSession", sessionRoute);
-app.use("/api/staging", stagingRoute);
+// app.use("/api/staging", stagingRoute);
+app.use("/api/explanations", explanationsRoute);
 
 app.listen(PORT, (req, res) => {
     console.log(`Server started on PORT ${PORT}`);
