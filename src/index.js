@@ -50,7 +50,7 @@ app.get("/", (req, res) => {
 app.use("/api/auth", authRoute);
 app.use("/api/dashboard", dashboardRoute)
 app.use("/api/checkSession", sessionRoute);
-// app.use("/api/staging", stagingRoute);
+app.use("/api/staging", stagingRoute);
 app.use("/api/explanations", explanationsRoute);
 
 app.listen(PORT, (req, res) => {
