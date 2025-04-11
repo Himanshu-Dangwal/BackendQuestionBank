@@ -7,9 +7,6 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
 
-console.log("Using API key:", process.env.GEMINI_API_KEY ? "✅ Exists" : "❌ Missing");
-
-
 async function getExplanation(q) {
 
     try {
@@ -23,8 +20,8 @@ async function getExplanation(q) {
         Options:
         A. ${q.option1}
         B. ${q.option2}
-        C. ${q.option3 !== "empty" ? q.option3 : "N/A"}
-        D. ${q.option4 !== "empty" ? q.option4 : "N/A"}
+        C. ${q.option3 && q.option3 !== "empty" ? q.option3 : "N/A"}
+        D. ${q.option4 && q.option4 !== "empty" ? q.option4 : "N/A"}
 
         The correct answer is: ${q[q.correctChoice]}
 
