@@ -38,7 +38,7 @@ async function getExplanation(q) {
 
 module.exports.explanationController = async (req, res) => {
     const { questionId } = req.body;
-    console.log(questionId)
+    // console.log(questionId)
     const explanationResponse = await Explanation.findOne({ questionId });
 
     if (explanationResponse) {
