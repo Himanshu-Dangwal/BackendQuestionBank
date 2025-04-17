@@ -9,6 +9,7 @@ const dashboardRoute = require("../routes/dashboardRoute")
 const sessionRoute = require("../routes/sessionRoute")
 const stagingRoute = require("../routes/stagingRoute")
 const explanationsRoute = require("../routes/explanationsRoute")
+const deactivateRoute = require("../routes/deactivateRoute")
 
 dotenv.config()
 const app = express()
@@ -25,7 +26,7 @@ console.log(process.env.DB_URL)
 const dbUrl = process.env.PROD_URI || "mongodb://localhost:27017/"
 
 
-console.log(dbUrl)
+// console.log(dbUrl)
 
 
 // Connect to Database
@@ -51,6 +52,7 @@ app.use("/api/dashboard", dashboardRoute)
 app.use("/api/checkSession", sessionRoute);
 app.use("/api/staging", stagingRoute);
 app.use("/api/explanations", explanationsRoute);
+app.use("/api/deactivate", deactivateRoute);
 
 app.listen(PORT, (req, res) => {
     console.log(`Server started on PORT ${PORT}`);
