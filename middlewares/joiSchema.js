@@ -8,7 +8,8 @@ module.exports.userSchema = Joi.object({
 module.exports.loginSchema = Joi.object({
     username: Joi.string().required(),
     password: Joi.string().required().min(5),
-    captchaValue: Joi.string().required()
+    captchaValue: Joi.string().required(),
+    deviceId: Joi.string().optional().allow(null, '')
 })
 
 module.exports.loginTestSchema = Joi.object({

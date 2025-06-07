@@ -5,13 +5,13 @@ const axios = require("axios")
 const RECAPTCHA_SECRET_KEY = process.env.SECRET_KEY;
 
 module.exports.loginHandler = async (req, res) => {
-    console.log(process.env.JWT_SECRET)
-    const { username, password, captchaValue } = req.body;
+    // console.log(process.env.JWT_SECRET)
+    const { username, password, captchaValue, deviceId } = req.body;
 
     if (!captchaValue) {
         return res.status(400).json({ error: "CAPTCHA is required!" });
     }
-    console.log(username, password, captchaValue);
+    console.log(username, password, captchaValue, deviceId);
     try {
 
         const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${RECAPTCHA_SECRET_KEY}&response=${captchaValue}`;
@@ -33,6 +33,14 @@ module.exports.loginHandler = async (req, res) => {
         const isMatch = await bcrypt.compare(password, foundUser.password);
         if (!isMatch) {
             return res.status(400).json({ success: false, message: 'Invalid credentials' });
+        }
+
+        if (foundUser.deviceId && foundUser.deviceId !== deviceId) {
+            return res.status(403).json({ message: 'Device ID mismatch. Please log in from the registered device.' });
+        }
+        if (!foundUser.deviceId) {
+            foundUser.deviceId = deviceId;
+            await foundUser.save();
         }
 
         const token = jwt.sign({ id: foundUser._id }, process.env.JWT_SECRET, { expiresIn: '1d' });

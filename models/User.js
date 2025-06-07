@@ -16,6 +16,7 @@ const userSchema = new mongoose.Schema({
         default: 0
     },
     isActive: { type: Boolean, default: true },
+    deviceId: { type: String, default: null },
     createdAt: { type: Date, default: Date.now },
 })
 
